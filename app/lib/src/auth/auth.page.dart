@@ -96,7 +96,8 @@ class _AuthPageState extends State<AuthPage> {
             Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  FlatButton(
+                  RaisedButton(
+                      elevation: 9,
                       color: Colors.blue,
                       textColor: Colors.white,
                       shape: RoundedRectangleBorder(
