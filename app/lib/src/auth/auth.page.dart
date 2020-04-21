@@ -22,6 +22,9 @@ class _AuthPageState extends State<AuthPage> {
       body: ListView(
         children: [SafeArea(child: _createHeader()), _createLoginInput()],
       ),
+      floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.camera),
+          onPressed: () => Navigator.of(context).pushNamed('/authPhoto')),
     );
   }
 

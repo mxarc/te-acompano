@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:te_acompano/src/auth/auth.page.dart';
+import 'package:te_acompano/src/routes/routes.dart';
 
 void main(List<String> args) {
   runApp(TeAcompanoApp());
@@ -9,10 +9,10 @@ class TeAcompanoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'Te acompaño',
+      title: 'Te Acompaño',
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
-      routes: {'/': (context) => new AuthPage()},
+      routes: getAppRoutes(),
     );
   }
 }
