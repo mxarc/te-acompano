@@ -20,7 +20,12 @@ class _ProfilePhotoPageState extends State<ProfilePhotoPage> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.arrow_forward),
-          onPressed: () => Navigator.of(context).pushNamed('/menu')),
+          onPressed: () {
+            if (_image != null) {
+              _saveProfilePhoto(context);
+            }
+            Navigator.of(context).pushNamed('/menu');
+          }),
       body: ListView(
         children: <Widget>[
           Container(
@@ -87,7 +92,8 @@ class _ProfilePhotoPageState extends State<ProfilePhotoPage> {
       dialog.showMessage(
           'Imagen actualizada',
           'Ahora tienes una nueva foto de perfil',
-          AssetImage('assets/happy-256.png'));
+          AssetImage('assets/happy-256.png'),
+          autoClose: true);
     } catch (e) {
       print('Error');
       dialog.closeDialog();
