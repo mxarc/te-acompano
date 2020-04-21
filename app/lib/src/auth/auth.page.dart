@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:te_acompano/src/auth/auth.service.dart';
 import 'package:te_acompano/src/widgets/info_dialog.widget.dart';
 
@@ -130,7 +131,15 @@ class _AuthPageState extends State<AuthPage> {
       print(authResult.email);
       print('User logged in');
     } catch (e) {
-      print('No user with this login credentials');
+      print('Error: ' + e.message);
+      Fluttertoast.showToast(
+          msg: e.message,
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 4,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
     }
     dialog.closeDialog();
   }
