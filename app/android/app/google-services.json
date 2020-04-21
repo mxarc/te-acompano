@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "988735596362",
+    "firebase_url": "https://te-acompano.firebaseio.com",
+    "project_id": "te-acompano",
+    "storage_bucket": "te-acompano.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:988735596362:android:b83ca11dbc370e646e03b3",
+        "android_client_info": {
+          "package_name": "digital.molecula.teacompano"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "988735596362-uut1pjt9nvi33r40em7om894pbk7c94e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7Xw-3SsOjcqDmfWCxmVvb5Dl95hd4jEE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "988735596362-uut1pjt9nvi33r40em7om894pbk7c94e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
