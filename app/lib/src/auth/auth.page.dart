@@ -97,23 +97,26 @@ class _AuthPageState extends State<AuthPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   FlatButton(
-                      color: _isRegistering ? Colors.grey : Colors.blue,
+                      color: Colors.blue,
                       textColor: Colors.white,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15)),
-                      child: _isRegistering ? Text('Volver') : Text('Acceder'),
-                      onPressed: () => _isRegistering
-                          ? setState(() => _isRegistering = !_isRegistering)
-                          : _doLogin(context)),
+                      child: _isRegistering
+                          ? Text('REGISTRARME')
+                          : Text('ACCEDER'),
+                      onPressed: () =>
+                          _isRegistering ? _doRegister() : _doLogin(context)),
                   SizedBox(height: 5),
                   FlatButton(
-                    color: _isRegistering ? Colors.blue : Colors.grey,
+                    color: Colors.grey,
                     textColor: Colors.white,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15)),
-                    child: Text('Registrarme'),
+                    child: Text(_isRegistering ? 'VOLVER' : 'REGISTRARME'),
                     onPressed: () => _isRegistering
-                        ? _doRegister()
+                        ? setState(() {
+                            _isRegistering = false;
+                          })
                         : setState(() {
                             _isRegistering = true;
                           }),
