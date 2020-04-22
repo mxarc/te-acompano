@@ -20,9 +20,9 @@ class _ProfilePhotoPageState extends State<ProfilePhotoPage> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.arrow_forward),
-          onPressed: () {
+          onPressed: () async {
             if (_image != null) {
-              _saveProfilePhoto(context);
+              await _saveProfilePhoto(context);
             }
             Navigator.of(context).pushNamed('/menu');
           }),
@@ -62,21 +62,44 @@ class _ProfilePhotoPageState extends State<ProfilePhotoPage> {
                     SizedBox(
                       height: 20,
                     ),
-                    FlatButton(
-                        color: Colors.blue,
-                        textColor: Colors.white,
-                        child: _image == null
-                            ? Text('Tomar una foto')
-                            : Text('Tomar otra foto'),
-                        onPressed: () => _openCamera()),
-                    (_image != null
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 50.0),
+                      child: Row(children: <Widget>[
+                        FlatButton(
+                            color: Colors.blue,
+                            textColor: Colors.white,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Icon(Icons.camera),
+                                SizedBox(width: 5),
+                                Text('Tomar foto')
+                              ],
+                            ),
+                            onPressed: () => _openCamera()),
+                        SizedBox(width: 20),
+                        FlatButton(
+                            color: Colors.blue,
+                            textColor: Colors.white,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Icon(Icons.photo),
+                                SizedBox(width: 5),
+                                Text('Abrir galeria')
+                              ],
+                            ),
+                            onPressed: () => _openGallery()),
+                      ]),
+                    ),
+                    /* (_image != null
                         ? Container(
                             child: FlatButton(
                                 color: Colors.green,
                                 textColor: Colors.white,
                                 child: Text('Guardar'),
                                 onPressed: () => _saveProfilePhoto(context)))
-                        : Container())
+                        : Container())*/
                   ]))
         ],
       ),
@@ -89,11 +112,10 @@ class _ProfilePhotoPageState extends State<ProfilePhotoPage> {
       dialog.showLoading('Subiendo imagen');
       final profilePhoto = await new AuthService().storeProfilePhoto(_image);
       dialog.closeDialog();
-      dialog.showMessage(
+      await dialog.showMessage(
           'Imagen actualizada',
           'Ahora tienes una nueva foto de perfil',
-          AssetImage('assets/happy-256.png'),
-          autoClose: true);
+          AssetImage('assets/happy-256.png'));
     } catch (e) {
       print('Error');
       dialog.closeDialog();
@@ -103,6 +125,14 @@ class _ProfilePhotoPageState extends State<ProfilePhotoPage> {
   Future<void> _openCamera() async {
     print('Opening camera');
     final image = await ImagePicker.pickImage(source: ImageSource.camera);
+    setState(() {
+      _image = image;
+    });
+  }
+
+  Future<void> _openGallery() async {
+    print('Opening gallery');
+    final image = await ImagePicker.pickImage(source: ImageSource.gallery);
     setState(() {
       _image = image;
     });
