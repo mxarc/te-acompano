@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:te_acompano/src/models/user.model.dart';
+import 'package:te_acompano/src/shared/models/user.model.dart';
 
 import 'auth.interface.dart';
 
@@ -60,9 +60,8 @@ class AuthService implements Auth {
     return currentUser;
   }
 
-  Future<String> getCurrentUser() async {
-    FirebaseUser user = await _firebaseAuth.currentUser();
-    return user.uid;
+  Future<FirebaseUser> getCurrentUser() async {
+    return await _firebaseAuth.currentUser();
   }
 
   Future<String> storeProfilePhoto(File photo) async {
