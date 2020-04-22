@@ -66,10 +66,11 @@ class AuthService implements Auth {
   }
 
   Future<String> storeProfilePhoto(File photo) async {
-    FirebaseUser fUser = await _firebaseAuth.currentUser();
-    var fileRef = _firebaseStorageReference.child(fUser.uid);
+    FirebaseUser firebaseUser = await _firebaseAuth.currentUser();
+    StorageReference fileReference =
+        _firebaseStorageReference.child('profile_pictures/' + firebaseUser.uid);
 
-    final StorageUploadTask uploadTask = fileRef.putFile(photo);
+    final StorageUploadTask uploadTask = fileReference.putFile(photo);
 
     final StorageTaskSnapshot storageTaskSnapshot =
         (await uploadTask.onComplete);
@@ -81,12 +82,12 @@ class AuthService implements Auth {
     String displayName,
     String photoUrl,
   }) async {
-    FirebaseUser fUser = await _firebaseAuth.currentUser();
+    FirebaseUser firebaseUser = await _firebaseAuth.currentUser();
 
     UserUpdateInfo updateInfo = UserUpdateInfo();
     if (displayName != null) updateInfo.displayName = displayName;
     if (photoUrl != null) updateInfo.photoUrl = photoUrl;
-    await fUser.updateProfile(updateInfo);
+    await firebaseUser.updateProfile(updateInfo);
 
     FirebaseUser currentUser = await _firebaseAuth.currentUser();
 
@@ -97,7 +98,6 @@ class AuthService implements Auth {
       'uid': currentUser.uid,
       'photoUrl': currentUser.photoUrl,
     });
-
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('email', currentUser.email);
     prefs.setString('uid', currentUser.uid);

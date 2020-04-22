@@ -20,13 +20,9 @@ class _AuthPageState extends State<AuthPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        children: [SafeArea(child: _createHeader()), _createLoginInput()],
-      ),
-      floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.camera),
-          onPressed: () => Navigator.of(context).pushNamed('/authPhoto')),
-    );
+        body: ListView(
+      children: [SafeArea(child: _createHeader()), _createLoginInput()],
+    ));
   }
 
   Widget _createHeader() {
@@ -86,7 +82,7 @@ class _AuthPageState extends State<AuthPage> {
                         autocorrect: true,
                         keyboardType: TextInputType.text,
                         onChanged: (value) =>
-                            setState(() => _confirmationPassword = value),
+                            setState(() => _displayName = value),
                         textCapitalization: TextCapitalization.none,
                         decoration: _createDecoration(
                             'Tu nombre', Icon(Icons.person_pin)))
@@ -123,13 +119,23 @@ class _AuthPageState extends State<AuthPage> {
         ));
   }
 
-  void _doLogin(BuildContext context) async {
+  Future<void> _doLogin(BuildContext context) async {
     final dialog = new InfoDialog(context);
+    // do validation
+    if (_email.isEmpty || _password.isEmpty) {
+      await dialog.showMessage(
+          'Error',
+          'Necesitas rellenar todos los campos de texto',
+          AssetImage('assets/warn-256.png'));
+      return;
+    }
     dialog.showLoading('Accediendo');
     try {
       final authResult = await new AuthService().signIn(_email, _password);
       print(authResult.email);
       print('User logged in');
+      dialog.closeDialog();
+      Navigator.of(context).pushNamed('/menu');
     } catch (e) {
       print('Error: ' + e.message);
       Fluttertoast.showToast(
@@ -140,23 +146,52 @@ class _AuthPageState extends State<AuthPage> {
           backgroundColor: Colors.red,
           textColor: Colors.white,
           fontSize: 16.0);
+      dialog.closeDialog();
     }
-    dialog.closeDialog();
   }
 
-  void _doRegister() async {
+  Future<void> _doRegister() async {
+    print(_email);
+    print(_password);
+    print(_confirmationPassword);
+    print(_displayName);
     final dialog = new InfoDialog(context);
+    if (_email.isEmpty ||
+        _password.isEmpty ||
+        _confirmationPassword.isEmpty ||
+        _displayName.isEmpty) {
+      await dialog.showMessage(
+          'Error',
+          'Necesitas rellenar todos los campos de texto',
+          AssetImage('assets/warn-256.png'));
+      return;
+    }
+    if (_password != _confirmationPassword) {
+      await dialog.showMessage('Error', 'Las contraseñas no coinciden',
+          AssetImage('assets/warn-256.png'));
+      return;
+    }
     dialog.showLoading('Creando cuenta');
     try {
       final registerAuth =
           await new AuthService().signUp(_email, _password, _displayName);
-      print('User registered');
       dialog.closeDialog();
-      dialog.showMessage('Cuenta creada', 'Hemos creado una cuenta nueva',
+      print('User registered');
+      await dialog.showMessage('Cuenta creada', 'Hemos creado una cuenta nueva',
           AssetImage('assets/icons8-ok-256.png'),
-          autoClose: true);
+          duration: Duration(seconds: 1));
+
+      Navigator.of(context).pushNamed('/authPhoto');
     } catch (e) {
-      print(e);
+      print('Error: ' + e.message);
+      Fluttertoast.showToast(
+          msg: e.message,
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 4,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
       dialog.closeDialog();
     }
   }
