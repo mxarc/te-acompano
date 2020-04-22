@@ -40,7 +40,11 @@ class _AuthPageState extends State<AuthPage> {
               fontSize: 32,
               fontWeight: FontWeight.bold,
               color: Colors.blueAccent)),
-      Text('Bienvenido')
+      Text('Bienvenido',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w400,
+          ))
     ]);
   }
 
@@ -50,12 +54,14 @@ class _AuthPageState extends State<AuthPage> {
         child: Column(
           children: <Widget>[
             Container(
-                margin: EdgeInsets.only(bottom: 5.0),
-                child: Text(
-                  'Por favor introduce tus datos de usuario',
-                  textAlign: TextAlign.left,
-                  overflow: TextOverflow.fade,
-                )),
+                margin: EdgeInsets.only(bottom: 10.0),
+                child: Text('Por favor introduce tus datos de usuario',
+                    textAlign: TextAlign.left,
+                    overflow: TextOverflow.fade,
+                    style: TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.w400,
+                    ))),
             Divider(),
             Container(
               child: TextField(
