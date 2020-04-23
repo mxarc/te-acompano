@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:te_acompano/src/auth/auth.service.dart';
-import 'package:te_acompano/src/widgets/info_dialog.widget.dart';
+import 'package:te_acompano/src/shared/widgets/info_dialog.widget.dart';
 
 class ProfilePhotoPage extends StatefulWidget {
-  ProfilePhotoPage({Key key}) : super(key: key);
-
+  ProfilePhotoPage({this.loginCallback});
+  final VoidCallback loginCallback;
   @override
   _ProfilePhotoPageState createState() => _ProfilePhotoPageState();
 }
@@ -24,7 +24,8 @@ class _ProfilePhotoPageState extends State<ProfilePhotoPage> {
             if (_image != null) {
               await _saveProfilePhoto(context);
             }
-            Navigator.of(context).pushNamed('/menu');
+            widget.loginCallback();
+            //Navigator.of(context).pushNamed('/menu');
           }),
       body: ListView(
         children: <Widget>[

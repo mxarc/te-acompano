@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:te_acompano/src/auth/auth.service.dart';
-import 'package:te_acompano/src/widgets/info_dialog.widget.dart';
+import 'package:te_acompano/src/auth/auth.interface.dart';
+import 'package:te_acompano/src/shared/widgets/info_dialog.widget.dart';
 
 class AuthPage extends StatefulWidget {
-  AuthPage({Key key}) : super(key: key);
+  AuthPage({this.auth, this.profilePictureCallback, this.loginCallback});
+
+  final Auth auth;
+  final VoidCallback profilePictureCallback;
+  final VoidCallback loginCallback;
 
   @override
   _AuthPageState createState() => _AuthPageState();
@@ -141,11 +145,11 @@ class _AuthPageState extends State<AuthPage> {
     }
     dialog.showLoading('Accediendo');
     try {
-      final authResult = await new AuthService().signIn(_email, _password);
+      final authResult = await widget.auth.signIn(_email, _password);
       print(authResult.email);
       print('User logged in');
       dialog.closeDialog();
-      Navigator.of(context).pushNamed('/menu');
+      widget.loginCallback();
     } catch (e) {
       print('Error: ' + e.message);
       Fluttertoast.showToast(
@@ -184,14 +188,13 @@ class _AuthPageState extends State<AuthPage> {
     dialog.showLoading('Creando cuenta');
     try {
       final registerAuth =
-          await new AuthService().signUp(_email, _password, _displayName);
+          await widget.auth.signUp(_email, _password, _displayName);
       dialog.closeDialog();
       print('User registered');
       await dialog.showMessage('Cuenta creada', 'Hemos creado una cuenta nueva',
           AssetImage('assets/icons8-ok-256.png'),
           duration: Duration(seconds: 1));
-
-      Navigator.of(context).pushNamed('/authPhoto');
+      widget.profilePictureCallback();
     } catch (e) {
       print('Error: ' + e.message);
       Fluttertoast.showToast(

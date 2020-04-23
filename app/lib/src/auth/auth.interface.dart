@@ -7,7 +7,7 @@ abstract class Auth {
     String password,
     String displayName,
   );
-  Future<String> getCurrentUser();
+  Future<FirebaseUser> getCurrentUser();
   Future<FirebaseUser> updateCurrentUser({
     String displayName,
     String photoUrl,
