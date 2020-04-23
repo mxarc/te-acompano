@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:te_acompano/src/auth/auth.interface.dart';
 import 'package:te_acompano/src/shared/widgets/info_dialog.widget.dart';
 
@@ -18,6 +20,12 @@ class _MenuPageState extends State<MenuPage> {
   @override
   Widget build(BuildContext context) {
     final dialog = new InfoDialog(context);
+
+    //aqui bajamos el user con provider
+    FirebaseUser user = Provider.of<FirebaseUser>(context);
+
+    String _email = (user != null) ? user.email : '';
+
     return Scaffold(
       appBar: AppBar(title: Text('Te acompaño')),
       drawer: Drawer(
@@ -29,7 +37,7 @@ class _MenuPageState extends State<MenuPage> {
                 color: Colors.blue,
               ),
               child: Text(
-                'Hola',
+                'Hola ' + _email,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,
@@ -54,7 +62,11 @@ class _MenuPageState extends State<MenuPage> {
               onTap: () async {
                 await dialog
                     .showConfirmation(
-                        'Cerrar Sesion', '¿Seguro que quieres salir?', null, 'Cancelar', 'Aceptar')
+                        'Cerrar Sesion',
+                        '¿Seguro que quieres salir?',
+                        null,
+                        'Cancelar',
+                        'Aceptar')
                     .then((value) {
                   if (value) {
                     widget.logoutCallback();
