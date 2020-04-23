@@ -48,6 +48,11 @@ class AuthService implements Auth {
     await firebaseUser.user.updateProfile(updateInfo);
 
     FirebaseUser currentUser = await _firebaseAuth.currentUser();
+
+    //creamos el archivo para el usuario en firestore
+    Firestore.instance.collection('users').document(currentUser.uid).setData(
+        {'uid': currentUser.uid, 'userName': displayName, 'profileUrl': ''});
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('email', currentUser.email);
     prefs.setString('uid', currentUser.uid);
