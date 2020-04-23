@@ -1,7 +1,10 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:te_acompano/src/auth/auth.service.dart';
 import 'package:te_acompano/src/shared/widgets/info_dialog.widget.dart';
 
@@ -108,10 +111,17 @@ class _ProfilePhotoPageState extends State<ProfilePhotoPage> {
   }
 
   Future<void> _saveProfilePhoto(context) async {
+    FirebaseUser user = Provider.of<FirebaseUser>(context, listen: false);
+
+
     final dialog = new InfoDialog(context);
     try {
       dialog.showLoading('Subiendo imagen');
       final profilePhoto = await new AuthService().storeProfilePhoto(_image);
+      Firestore.instance
+          .collection('users')
+          .document(user.uid)
+          .updateData({'profileUrl': profilePhoto});
       dialog.closeDialog();
       await dialog.showMessage(
           'Imagen actualizada',
