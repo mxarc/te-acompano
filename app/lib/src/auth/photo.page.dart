@@ -113,7 +113,6 @@ class _ProfilePhotoPageState extends State<ProfilePhotoPage> {
   Future<void> _saveProfilePhoto(context) async {
     FirebaseUser user = Provider.of<FirebaseUser>(context, listen: false);
 
-
     final dialog = new InfoDialog(context);
     try {
       dialog.showLoading('Subiendo imagen');
@@ -126,7 +125,7 @@ class _ProfilePhotoPageState extends State<ProfilePhotoPage> {
       await dialog.showMessage(
           'Imagen actualizada',
           'Ahora tienes una nueva foto de perfil',
-          AssetImage('assets/happy-256.png'));
+          AssetImage('assets/happy.png'));
     } catch (e) {
       print('Error');
       dialog.closeDialog();

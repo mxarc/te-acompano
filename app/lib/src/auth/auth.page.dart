@@ -140,7 +140,7 @@ class _AuthPageState extends State<AuthPage> {
       await dialog.showMessage(
           'Error',
           'Necesitas rellenar todos los campos de texto',
-          AssetImage('assets/warn-256.png'));
+          AssetImage('assets/warn.png'));
       return;
     }
     dialog.showLoading('Accediendo');
@@ -177,22 +177,21 @@ class _AuthPageState extends State<AuthPage> {
       await dialog.showMessage(
           'Error',
           'Necesitas rellenar todos los campos de texto',
-          AssetImage('assets/warn-256.png'));
+          AssetImage('assets/warn.png'));
       return;
     }
     if (_password != _confirmationPassword) {
       await dialog.showMessage('Error', 'Las contraseñas no coinciden',
-          AssetImage('assets/warn-256.png'));
+          AssetImage('assets/warn.png'));
       return;
     }
     dialog.showLoading('Creando cuenta');
     try {
-      final registerAuth =
-          await widget.auth.signUp(_email, _password, _displayName);
+      await widget.auth.signUp(_email, _password, _displayName);
       dialog.closeDialog();
       print('User registered');
       await dialog.showMessage('Cuenta creada', 'Hemos creado una cuenta nueva',
-          AssetImage('assets/icons8-ok-256.png'),
+          AssetImage('assets/ok.png'),
           duration: Duration(seconds: 1));
       widget.profilePictureCallback();
     } catch (e) {
