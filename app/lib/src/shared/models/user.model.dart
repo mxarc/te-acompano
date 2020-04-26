@@ -21,6 +21,7 @@ class User {
       'email': _email,
       'displayName': _displayName,
       'uid': _uid,
+      'photoUrl': _photoUrl,
     };
   }
 }

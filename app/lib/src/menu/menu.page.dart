@@ -36,7 +36,9 @@ class _MenuPageState extends State<MenuPage> {
               margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: CircleAvatar(
                 radius: 18.0,
-                backgroundImage: NetworkImage(user.photoUrl),
+                backgroundImage: (user.photoUrl != null)
+                    ? NetworkImage(user.photoUrl)
+                    : AssetImage('assets/nopp.png'),
                 backgroundColor: Colors.transparent,
               )),
         ],
