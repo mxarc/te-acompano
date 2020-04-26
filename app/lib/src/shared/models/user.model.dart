@@ -25,3 +25,20 @@ class User {
     };
   }
 }
+
+//modelo para los archivos User en la base de datos
+//abierto a cambios
+class UserProfile {
+  final String uid;
+  final String userName;
+  final String profileUrl;
+
+  UserProfile({this.uid, this.userName, this.profileUrl});
+
+  factory UserProfile.fromMap(Map data) {
+    return UserProfile(
+        uid: data['uid'] ?? '',
+        userName: data['userName'] ?? '',
+        profileUrl: data['profileUrl'] ?? '');
+  }
+}

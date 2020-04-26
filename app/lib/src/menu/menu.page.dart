@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:te_acompano/src/auth/auth.interface.dart';
-import 'package:te_acompano/src/profile/user.profile.dart';
+import 'package:te_acompano/src/profile/user.profile.owner.dart';
 import 'package:te_acompano/src/shared/widgets/info_dialog.widget.dart';
 
 import 'widgets/card.widget.dart';
@@ -126,7 +126,7 @@ class _MenuPageState extends State<MenuPage> {
             leading: Icon(Icons.account_circle),
             title: Text('Perfil'),
             onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                builder: (BuildContext context) => UserProfile())),
+                builder: (BuildContext context) => UserProfileOwner())),
           ),
           ListTile(
             leading: Icon(Icons.settings),
