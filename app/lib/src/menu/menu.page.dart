@@ -24,7 +24,9 @@ class MenuPage extends StatefulWidget {
 class _MenuPageState extends State<MenuPage> {
   @override
   Widget build(BuildContext context) {
+    //provider
     FirebaseUser user = Provider.of<FirebaseUser>(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -37,9 +39,7 @@ class _MenuPageState extends State<MenuPage> {
               margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: CircleAvatar(
                 radius: 18.0,
-                backgroundImage: (user.photoUrl != null)
-                    ? NetworkImage(user.photoUrl)
-                    : AssetImage('assets/nopp.png'),
+                backgroundImage: AssetImage('assets/nopp.png'),
                 backgroundColor: Colors.transparent,
               )),
         ],
@@ -51,6 +51,10 @@ class _MenuPageState extends State<MenuPage> {
 
   Widget _buildMainPage(FirebaseUser user) {
     FirebaseUser user = Provider.of<FirebaseUser>(context);
+
+    String _userName = '';
+    (user != null) ? _userName = user.displayName : _userName = '';
+
     final titleStyle = TextStyle(
         color: Color.fromRGBO(62, 62, 62, 1),
         fontSize: 34,
@@ -75,7 +79,7 @@ class _MenuPageState extends State<MenuPage> {
                     style: titleStyle,
                   ),
                   Text(
-                    user.displayName,
+                    _userName,
                     style: titleStyle,
                   ),
                   SizedBox(
@@ -100,6 +104,7 @@ class _MenuPageState extends State<MenuPage> {
   }
 
   Widget _buildDrawer(FirebaseUser user) {
+    String _userName = (user != null) ? user.displayName : '';
     String _email = (user != null) ? user.email : '';
     return Drawer(
       semanticLabel: 'Abrir navegación',
@@ -111,7 +116,7 @@ class _MenuPageState extends State<MenuPage> {
               color: Colors.blueAccent,
             ),
             child: Text(
-              'Te acompaño',
+              'Te acompaño\n' + _userName,
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 24,

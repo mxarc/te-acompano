@@ -19,8 +19,9 @@ class _UserProfileOwnerState extends State<UserProfileOwner> {
     if (user != null && user.uid != null) {
       return MultiProvider(
         providers: [
-          StreamProvider<UserProfile>.value(
-            value: DatabaseService().streamUserProfile(user.uid),
+          StreamProvider<UserProfile>(
+            create: (BuildContext context) =>
+                DatabaseService().streamUserProfile(user.uid),
           )
         ],
         child: BuildView(),
