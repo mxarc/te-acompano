@@ -92,7 +92,8 @@ class _MenuPageState extends State<MenuPage> {
                         style: Theme.of(context).textTheme.subtitle)
                   ]),
                   PhraseCardWidget(
-                      phrase: 'Una frase motivadora que dijo algún wey filoso'),
+                      phrase:
+                          'Ningún mar en calma hizo experto a un marinero.'),
                   SizedBox(height: 10),
                   Text('¿Cómo te sientes?', style: subtitleStyle),
                   FeelWidget(),
@@ -111,18 +112,40 @@ class _MenuPageState extends State<MenuPage> {
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          DrawerHeader(
+          /*DrawerHeader(
             decoration: BoxDecoration(
               color: Colors.blueAccent,
             ),
             child: Text(
-              'Te acompaño\n' + _userName,
+              'Hola\n' + _userName,
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 24,
               ),
             ),
-          ),
+          ),*/
+          Container(
+              height: 200,
+              decoration: BoxDecoration(
+                  gradient: RadialGradient(
+                      center: AlignmentDirectional.topStart,
+                      stops: [
+                    0,
+                    0.9
+                  ],
+                      colors: [
+                    Color.fromRGBO(132, 81, 161, 1),
+                    Color.fromRGBO(132, 81, 161, 0.8),
+                  ])),
+              child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 10, vertical: 50),
+                  child: Text(
+                    'Hola\n' + _userName,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                    ),
+                  ))),
           ListTile(
             leading: Icon(Icons.message),
             title: Text('Mensajes'),

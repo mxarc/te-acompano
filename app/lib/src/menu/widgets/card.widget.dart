@@ -30,6 +30,16 @@ class PhraseCardWidget extends StatelessWidget {
                   textAlign: TextAlign.left,
                   style: TextStyle(color: Colors.white, fontSize: 32)),
               Divider(),
+              Row(
+                children: <Widget>[
+                  Spacer(),
+                  Text(
+                    '¿Te gustó esta frase?',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ],
+              ),
+              SizedBox(height: 15),
               _likeButtons()
             ],
           ),
@@ -39,7 +49,41 @@ class PhraseCardWidget extends StatelessWidget {
   }
 
   Widget _likeButtons() {
-    return Container();
+    return Container(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: <Widget>[
+          Spacer(),
+          OutlineButton(
+            onPressed: () => print('Si'),
+            child: Row(
+              children: <Widget>[
+                Icon(Icons.thumb_up, size: 15.0),
+                SizedBox(
+                  width: 5,
+                ),
+                Text('Sí')
+              ],
+            ),
+            textColor: Colors.white,
+          ),
+          SizedBox(width: 10),
+          OutlineButton(
+            onPressed: () => print('No'),
+            child: Row(
+              children: <Widget>[
+                Icon(Icons.thumb_down, size: 15.0),
+                SizedBox(
+                  width: 5,
+                ),
+                Text('No')
+              ],
+            ),
+            textColor: Colors.white,
+          )
+        ],
+      ),
+    );
   }
 }
 
